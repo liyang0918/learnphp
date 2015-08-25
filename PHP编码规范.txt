@@ -1,0 +1,80 @@
+php编码规范
+
+一、书写规范
+
+1、缩进
+使用 Tab 键，缩进4个空格
+
+2、大括号
+大括号与关键字同行
+if ($expr) {
+	...
+}
+
+3、空白
+小括号和关键字之间用空格隔开
+if (condition)
+
+小括号和函数名之间不留空白
+unset($val)
+
+运算符与两边的变量或表达式之间有空白
+($boo == true)
+
+代码段之间加入一行空行
+
+二、命名规范
+
+1、类命名
+使用驼峰式命名，单词仅首字母大写，不使用下划线
+Name、SuperMan
+
+2、类属性命名
+以 m 为前缀，之后命名与类命名相同
+mValue、mLongtring
+
+3、方法命名
+书写规则和类命名一致，应说明此方法的作用
+Is、Get、Set
+
+4、方法中的参数命名
+首字符小写，剩余的与类命名规则相同
+class StartStudy {
+	function EchoWord($firstWord, $secondWord) {
+	
+	}
+}
+
+5、变量命名
+所有字母小写、单词用下划线分隔
+$msg_error
+
+6、引用命名
+用 r 作为前缀
+$rExam
+
+7、全局变量命名
+用 g 作为前缀
+$gTest
+
+8、常量、全局常量命名
+全部大写表示，单词之间用下划线隔开
+define('DEFAULT_NUM_AVE', 90);
+
+9、静态变量命名
+用 s 作为前缀
+static $sStatus = 1;
+
+10、函数命令
+所有字母都小写，多个单词用下划线隔开
+function this_good_idear() {
+
+}
+
+
+命名规则组合起来用
+如 类中的一个属性时静态变量
+class Example {
+	$msValue = "";
+}
+
