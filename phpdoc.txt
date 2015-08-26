@@ -1,0 +1,147 @@
+
+PHP代码都是包含在 PHP标记中，如
+<?php
+	...
+?>
+
+一、PHP基础
+	1、php标记风格
+	xml风格
+	<?php
+		echo "hello"
+	?>
+	
+	脚本风格
+	<script language="php">
+		echo 'script'
+	</script>
+	
+	简短风格
+	<? echo 'short' ?>
+
+	ASP风格
+	<%
+		echo 'ASP'
+	%>
+	
+	简短风格、ASP风格需要在php.ini中设置相关字段为on
+	
+	2、php注释
+	c、c++、shell三种注释风格
+	/**/、//、#
+	
+	3、php数据类型
+	标量数据类型
+	-- boolean 布尔类型
+		true、false
+	-- string 字符串
+		单引号包含的变量按普通字符处理
+		双引号包含的变量会被替换成实际数值
+		<<<std 符号定义 std 未字符串定界符，遇到顶格写的、孤立的 std 认为字符串结束
+	-- integer 整型
+	-- float 浮点型
+		浮点类型 float和double完全一样
+		
+	复合数据类型
+	-- array 数组
+		三种定义方式: $arr = array(...)
+		$arr = array('value1', 'value2'...)
+		$arr[key] = 'value'
+		$arr = array(key1=>value1, key2=>value2...)
+		如 
+			$arr = array('hello', 'world');
+			$arr['name'] = 'unknown';
+			$arr = array('host'=>'192.168.1.20', 'port'=>22);
+	-- object 对象
+	
+	特殊数据类型
+	-- resource 资源
+	-- null 空值
+	
+	相关函数	
+	-- unset()
+		撤销一个变量
+	-- (boolean)$val
+		转换为布尔型，原val类型不变，类似的 (TYPE)$val
+	-- settype(var, type): 
+		将var转换成 type 类型
+	-- is_bool()、is_string()、is_float()、is_double()、is_integer()、is_int()、
+		is_null()、is_array()、is_object()、is_numeric()
+	
+	4、php常量
+	define(name, value, true):
+		定义一个名为name、值为value的常量，true表示忽略大小写
+	constant(name):
+		获取一个常量值，等效与 $name
+	
+	5、php变量
+	变量引用，相当与给变量起别名
+		如 $str = "spcn";,引用str $rstr = & $str;
+	
+	变量作用域:
+	-- 局部变量，在函数内定义
+	-- 全局变量，在函数外定义，函数内不能直接使用，需加 global声明
+	-- 静态变量，static声明
+	
+	可变变量：名字可变的变量
+		php中，变量的名字实际上时一个字符串 使用 “$ + 字符串” 可以获取一个变量值
+		如 $str = 'hello'; $p = 'str'; $$p 相当于 $str,
+		
+	预定义变量:
+	-- $_SERVER 数组，包含主机ip、port等信息
+		如 $_SERVER['SERVER_ADDR'],$_SERVER[SERVER_NAME] ...
+	-- $_COOKIE 通过HTTPCookie传递到脚本的信息
+	-- $_SESSION 会话相关
+	-- $_POST、$_GET 包含通过post或get方法传递参数的相关信息
+	-- $GLOBALS 所有全局变量构成的数组，变量名在这个数组中是一个索引
+	
+	6、运算符
+	+-*/% ^|& && || and or xor ! 等
+
+	字符串链接符为点号 . 
+	如 $a = "Li",$b = "Yang",则 $a.$b两个字符串链接，生成新串 “LiYang”
+	加号不能作为字符串连接符，两字符串相加只是将字面的数值相加
+	
+	&& 和 and 、|| 和 or 意义相同，但 &&、|| 同优先级，and、or同优先级，前者优先级高
+	
+	===恒等，判断该运算符两边操作数在数值、类型上是否都相等
+	如：$val = '123', 
+		$val === 123 结果   false
+		$val == 123 结果    true
+		$val === true 结果  true,因为非"0"的字符串都有一个布尔值true
+		
+	@符号屏蔽错误输出
+	如 @$val = 5/0,系统不报错
+	
+	7、函数
+	function funname($str1, str2...) {
+		funbody
+	}
+	
+	函数传值时，声明为 function funname($str1)
+	函数传引用时，声明为 function funname(&$str1)
+	函数默认参数只能在参数表右侧的一个或连续多个参数
+	函数使用 return 或 return() 返回，在主流成中用 return 会结束整个脚本
+	变量函数：用一个字符串存储函数名
+	如 $myfun = 'funname'; $myfun() 会调用funname() 函数
+	
+
+二、PHP流程控制
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
