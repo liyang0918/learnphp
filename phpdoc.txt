@@ -96,10 +96,10 @@ PHP代码都是包含在 PHP标记中，如
 	-- $GLOBALS 所有全局变量构成的数组，变量名在这个数组中是一个索引
 	
 	6、运算符
-	+-*/% ^|& && || and or xor ! 等
+	+-*/%^|&! && || and or xor == != === !== > < >= <= =等
 
 	字符串链接符为点号 . 
-	如 $a = "Li",$b = "Yang",则 $a.$b两个字符串链接，生成新串 “LiYang”
+	如 $a = "Li",$b = "Yang",则 $a.$b两个字符串链接，生成新串"LiYang"
 	加号不能作为字符串连接符，两字符串相加只是将字面的数值相加
 	
 	&& 和 and 、|| 和 or 意义相同，但 &&、|| 同优先级，and、or同优先级，前者优先级高
@@ -121,12 +121,101 @@ PHP代码都是包含在 PHP标记中，如
 	函数传值时，声明为 function funname($str1)
 	函数传引用时，声明为 function funname(&$str1)
 	函数默认参数只能在参数表右侧的一个或连续多个参数
-	函数使用 return 或 return() 返回，在主流成中用 return 会结束整个脚本
+	函数使用 return 或 return() 返回，在主流程中用 return 会结束整个脚本
 	变量函数：用一个字符串存储函数名
 	如 $myfun = 'funname'; $myfun() 会调用funname() 函数
 	
 
 二、PHP流程控制
+	1、分支
+	if()、elseif()、else
+	switch-case
+	
+	2、循环
+	for(;;)、while()、do{}while()、
+	foreach ($arr as $value)
+		遍历数组 arr ，将遍历到的数组元素赋给 value
+	foreach ($arr as $key=>$value)
+		遍历数组 arr ，将遍历到的键和值分别赋给key、value
+		
+	3、break continue
+	break 跳出一层循环
+	break n 跳出n层循环
+	continue 终止本次循环，开始下次循环
+	
+	4、流程控制另一种书写格式	
+	冒号代替左括号；end... 作为结束标记
+	if():...
+	elseif():...
+	...
+	else:...
+	endif;
+	
+	for(;;):...
+	endfor;
+	
+	while():...
+	endwhile;
+	
+	switch():
+	case ...:...
+	default:...
+	endswitch;
+	
+	foreach():
+	endforeach;
+	
+三、字符串处理
+	1、string trim(string $str [, string charlist]) 从str中取出空格、空白或charlist指定的字符
+		返回处理过的串，原串不变；
+	ltrim()、rtrim() 取出字符串左/右边的空白、空格或charlist指定字符；
+	
+	2、string addslashes(string $str) 向str中添加转义符(反斜线)
+		返回处理过的串，原串不变；
+	   string stripslashes(string $str) 从str中删除转义符
+	   	返回处理过的串，原串不变；
+	
+	   string addcslashes(string $str, string $charlist) 向str中charlist制定的字符添加转义符
+	   	返回处理过的串，原串不变；
+	   string stripcslashes()；
+	   
+	3、strlen($str) 测量str的长度，汉字占两个字节；
+	
+	4、substr(string $str, int start [, int length])
+		截取字符串，从start开始，截取长度length；
+		start<0 表示从倒数第n个开始；
+		length<0表示截取到倒数第n个；
+	
+	5、字符串比较
+	-- strcmp() 按字节比较；
+	-- strcasecmp() 按字节比较，不区分大小写；
+	-- strnatcmp() 按字面值比较，有数字则比较数字的大小；
+	-- strncmp() 比较字符串钱几个字节；
+	
+	6、字符串查找
+	-- strstr(string $str, string $needle)
+		从str中找needle，从前往后找，找到返回字串，找不到返回false；
+		如: strstr("help.txt", ".") 返回 ".txt"；
+		strstr() 是 strchr() 的别名	；
+	-- strrchr() 从后往前找；
+	-- stristr() 不区分大小写；
+	
+	7、substr_count(string $str, string $needle) 统计str中needle出现的次数；
+	
+	8、字符串替换
+	-- str_replace(string search, string replace, string src_str [, int &count])
+		将src_str中出现的search全部替换成replace，用count获取替换的个数；
+	-- str_ireplace() 不区分大小写
+	-- substr_replace(string src_str, string replace, int start [, length])
+		将src_str中从start位置起，往后的length个字节全部替换未replace，length=0相当于插入；
+	
+	9、字符串分隔、合成
+	-- explode(string sep, string str [, int limit])
+		将str以sep为分隔符切割，结果放在数组中返回，若str中没有找到分隔符sep，则数组只含一个元素str；
+		limit设定生成数组的最大长度，若片段多余limit，则先切割limit-1次，剩余串放在数组末尾；
+	-- implode(string sep, array pieces)
+		合成字符串，将数组pieces元素以sep为链接符生成字符串返回；
+	
 	
 	
 	
