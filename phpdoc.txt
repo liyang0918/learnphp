@@ -216,7 +216,7 @@ PHP代码都是包含在 PHP标记中，如
 	-- implode(string sep, array pieces)
 		合成字符串，将数组pieces元素以sep为链接符生成字符串返回；
 	
-	
+四、正则表达式
 	
 	
 	
