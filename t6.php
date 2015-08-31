@@ -6,10 +6,20 @@
 		var_dump($register);
 	}
 
+	function ly_ereg_replace() {
+		$ereg = 'is';
+		$str = "This is history!";
+		@$str1 = ereg_replace($ereg, '**', $str);
+		echo '$str: '.$str."\n";
+		echo '$str1: '.$str1."\n";
+	}
+	ly_ereg_replace();
+	
 	function ly_split() {
 		$ereg = 'is';
 		$str = 'This is a register book.';
 		@$arr_str = spliti($ereg, $str);
+		echo 'split $str: '.$str."\n";
 		var_dump($arr_str);
 	}
 	
@@ -40,7 +50,22 @@
 		echo $match_one;
 	}
 	
-	$DoSth = "ly_preg_quote";
+	function c_back($str) {
+		$str = "<font color=$str[1]>$str[2]</font>";
+		return $str;
+	}
+	
+	function ly_preg_replace() {
+		$string  = '[color=blue]test[/color]';
+		echo preg_replace_callback('/\[color=(.*)\](.*)\[\/color\]/U', "c_back", $string);
+	}
+
+	$DoSth = "ly_split";
 	$DoSth();
+	
+	
+	
+	
+	
 ?>
 

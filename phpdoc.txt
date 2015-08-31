@@ -217,7 +217,106 @@ PHP代码都是包含在 PHP标记中，如
 		合成字符串，将数组pieces元素以sep为链接符生成字符串返回；
 	
 四、正则表达式
+	PHP使用PCRE风格的正则表达式，表达式放在定界符 / 中间
+	^ 匹配行开始
+	$ 匹配行结尾
+	单词定界： \b 表示单词边界，\B表示非单词边界
+		如 \btm\b表示一个单词 tm，\Btm\B表示tm是单词的一部分("html"中的tm)
+	? 匹配0或1此(至多1次)
+	+ 匹配1或多次(至少1次)
+	* 匹配0或多次(任意次)
+	{n} 匹配n此
+	{n,} 至少匹配n次
+	{n,m} 匹配n～m次
+	\d 数字 \D 非数字
+	\s 空白 \S 非空白
+	\w 标识符字符 [a-zA-Z0-9_] \W 非标识符字符
+	\b 单词边界 \B 非单词边界
 	
+	反向引用：引用前边括号内记忆的内容
+		(hello)\s+(ketty)\1\2
+		后边的\1 引用第一个括号hello，\2 引用第二个括号ketty
+		自定义分组名 (?p<name>...)
+		引用分组名 (?p=name)
+		 (?p<a1>hello)\s+(?p<a2>ketty)(?p=a1)(?p=a2)
+	
+	模式修饰符：
+	/.../i :不区分大小写
+	/.../m :多文本
+	/.../s :单文本
+	/.../x :忽略空白
+		 
+	posix扩展正则表达式
+	-- ereg(string pattern, string string [, array regs])
+		从string中匹配表达式pattern，结果放在regs内，匹配成功返回true
+		eregi()不区分大小写
+	-- ereg_replace(pattern, replace, str)
+		从str中匹配pattern，将匹配到的内容用replace替换生成新串返回，原串不变
+		eregi_replace()不区分大小写
+	-- split(pattern, string [, limit])
+		将string按pattern切割，切割片段存放在数组内返回，原串不变
+		spliti()不区分大小写
+		
+	PCRE扩展正则表达式
+	-- array preg_grep(pattern, array input)
+		依次对数组input中每个元素进行正则匹配，返回匹配成功的数组
+	-- preg_match(pattern, subject, [, array]) 匹配1次就停止
+		preg_match_all() 全部匹配
+		从串subject中匹配pattern，结果存放在array中
+	-- preg_quote(str [, string delimiter])
+		将str中出现的正则原子副转义(加反斜线)，delimiter指定额外的需转义的字符
+	-- preg_replace(pattern, replace, subject [, limit])
+		从subject中匹配pattern，并用replace替换，limit指定匹配次数
+	-- preg_replace_callback(pattern, callback, subject)
+		从subject中匹配pattern，将记忆串生成数组传给callback()来反向引用
+		callback($arr) $arr[1]、$arr[2]引用pattern小括号记忆的内容
+	-- preg_split(pattern, subject [, limit])
+		将subject按pattern切割
+		
+五、数组
+	1、数组输出: print_r()
+	
+	2、数组遍历: 
+	-- foreach()
+	-- each() + list()
+		each($arr1): 获取数组arr1当前游标所指的元素信息，返回含有4个元素的数组arr2
+			其中$arr2[0]和$arr2['key']记录$arr1当前游标所在位置的键名
+				$arr2[1]和$arr2['value']记录$arr1当前游标所在位置的值
+		list($a, $b, $c ...) = $arr: 用$arr 为一组数据($a,$b,$c...)赋值
+			其中$a=$arr[0],$b=$arr[1],$c=$arr[2]
+	
+	3、explode()将字符串切割，存放在数组里返回
+		implode()将数组组合成字符串返回
+		
+	4、count(	array [, mode]) 统计array数组元素个数
+		mode为0或1，为1时递归地统计元素个数(键个数)
+		
+	5、arraysearch(needle, arr [, bool strict])
+		从arr中搜索needle值，返回needle所在的键，strict为true时检查给定值的类型
+		
+	6、array_pop(arr) 弹出arr数组的最后一个元素并返回，数组为空返回null
+		array_push(arr, var) 将var压入数组arr的最后
+		
+	7、array_unique(arr)
+		去除arr中重复的元素
+		
+
+	
+	
+	
+	
+	
+	
+	
+	
+		
+		
+		
+		
+		
+		
+		
+		
 	
 	
 	
