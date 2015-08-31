@@ -300,7 +300,63 @@ PHP代码都是包含在 PHP标记中，如
 	7、array_unique(arr)
 		去除arr中重复的元素
 		
+六、表单
+	表单使用<form>标记，表单结构如下
+	<form name="form_name" method="method" action="url" enctype="value" target="target_win">
+	...
+	</form>
 
+	form标记的属性：
+		name:表单名称
+		method:表单提交方式，GET或POST
+		action:处理该页面的的url，可以是一个.php文件
+		enctype:设置表单编码方式
+		target:返回信息的显示方式
+	
+	在使用form表单时，必须指定action，它指定表单在提交时将内容发往何处进行处理
+
+	表单元素：
+	1、输入标记 <input>
+	语法格式如下
+	<form>
+		<input name="file_name" type="type_name">
+	</form>
+	type:
+	-- text 文本框
+	-- password 密码域，文本框输入时显示为*
+	-- file 文件域，上传文件时需要指明表单属性 enctype="multipart/form-data"
+	-- image 图像域，用在提交按钮上，这个图片具有按钮功能
+	-- radio 单选按钮，用于设置一组选项，用户只能选择一项
+	-- checkbox 复选框
+	-- submit 提交按钮，提交整个表单
+	-- reset 清除与重置表单内容
+	-- button 按钮，可以激发提交表单的动作
+	-- hidden 隐藏域，用于在表单中以隐含方式提交变量值
+	
+	2、选择域标记 <select>和<option>
+	<select name="name" size="value" multiple>
+		<option value="value" selected>选项1</option>
+		<option value="value">选项2</option>
+		<option value="value">选项3</option>
+	</select>
+	
+	multiple表示以菜单方式显示数据，默认以列表(下拉菜单)显示数据
+	菜单方式显示的数据支持多选
+	
+	3、文字域标记 <textarea>	
+	<textarea name="name" rows=value cols=value value="value" warp="value">
+		...
+	</textarea>
+	
+	
+	php中参数传递的常用方法有3种：$_POST[]、$_GET[]、$_SESSION[]，通过提交的 name 来获取值
+	
+	对URL传递的参数进行编码 string urlencode(string str)
+	如,对id参数进行编码
+	<a href="index.php?id=<?php echo urlencode("示例"); ?>">例子</a>
+	
+	对URL传递的参数进行解码 string urldecode(string str)
+	当通过GET方法传递过来参数后，使用 urldecode($_GET[id]) 返回解码的字符
 	
 	
 	
