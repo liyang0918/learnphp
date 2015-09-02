@@ -358,30 +358,175 @@ PHP代码都是包含在 PHP标记中，如
 	对URL传递的参数进行解码 string urldecode(string str)
 	当通过GET方法传递过来参数后，使用 urldecode($_GET[id]) 返回解码的字符
 	
+七、COOKIE 管理
+	1、创建Cookie
+	setcookie(name, value, expire, path, domain, secure);
+	2、获得Cookie的值
+	$_COOKIE[coookie_name]
+	3、删除Cookie
+	使用setcookie设置cookie有效时间减1
+	setcookie(cookie_name, "", time()-1);
 	
+	4、session使用流程
+	启动会话 -> 注册会话 -> 使用会话 -> 删除会话
+	-- 启动会话 bool session_start(void)
+		启动会话之前浏览器不能有任何输出
+	-- 注册会话 通过数组 $_SESSION 创建一个会话变量
+		$_SESSION[sess_name] = value;
+	-- 使用会话 访问数组$_SESSION[sess_name]
+		先判断sessname键是否存在
+			empty($_SESSION[sess_name])
+	-- 删除会话 unset($_SESSION[sess_name])
+		删除多个会话，可以将空数组赋给$_SESSION
+			$_SESSION = array();
+		结束当前会话
+			session_destroy();
 	
-	
-	
-	
-	
-	
+八、文件处理
+	*文件操作
+	resource fopen(filename, mode [, une_include_path]);
+		打开文件，返回文件操作句柄
+		mode:r,w,+,b,a,x       x为新建写打开，文件爱呢若存在则打开失败返回false
+		use_include_path:使用php.ini中指定的路径
 		
+	fclose(handle) 关闭文件，handle巍峨哦fopen时返回的文件句柄
+	
+	readfile(name) 读取文件爱呢内容，并输出到缓冲区(直接显示)
+		文件不需要打开，指定文件名name即可，直接输出文件内容
 		
+	array file(name) 读取文件内容，并按行输出到数组内返回
+		文件不需打开
 		
+	string file_get_content(name [, offset, maxlen])
+		读取文件内容，存放在数组中返回，offset指定读取起始偏移，maxlen指定读取长度
 		
+	string fgets(handle [, length])
+		读取文件一行返回到数组中，handle为已打开的文件句柄
 		
+	string fgetss(handle [, length,allowable_tags])
+		读取一行数据，过滤任何html和php标记，allowable_tags指定过滤器忽略的标记
+	
+	string fgetc(handle)
+		读一个字符
 		
+	string fread(handle, length)
+		读指定字节
 		
+	int fwrite(handle, string [, length])
+		写入指定字节，和fputs()用法相同，
+		
+	int file_put_contents(filename, data [, flags])
+		想文件中写入数据data，flags为文件锁标记
+		
+	bool copy(path1, path2)
+		将文件从path1拷贝到path2，失败返回false
+		
+	bool rename(filename1, filename2)
+		把filename改名为filename2
+		
+	bool unlink(filename)
+		删除文件，成功返回true
+		
+	int fileatime(filename)
+		返回文件最后一次访问时间，以UNIX时间戳方式返回
+		
+	int filetime(filename)
+		返回文件最后一次修改时间
+		
+	int filesize(filename)
+		返回文件大小(byte)
+	
+	int pathinfo(name [, opt])
+		文件路径信息，opt设置返回信息
+		opt:
+		-- PATHINFO_DIRNAME		dirname	
+		-- PATHINFO_BASENAME		basename
+		-- PATHINFO_EXTENSION	extension
+		
+	string realpath(filename)
+		返回文件绝对路径
+		
+	array stat(filename)
+		文件相关信息
+		
+	fopen('http://127.0.0.1/tm/sl/index.php', 'rb')
+		支持以url方式访问远程文件
+			
+	rewind(handle)
+		重置文件指针到开头
+	
+	fseek((handle, offset, wherce)
+		定位文件指针
+		
+	bool feof(handle)
+		判断文件指针是否到文件结尾
+		
+	int ftell(handle)
+		返回当前文件指针位置
+		
+	bool flock(handle, opt) 为文件加锁
+		opt：
+		-- LOCK_SH 共享锁(读)
+		-- LOCK_EX 独占锁(写)
+		-- LOCK_UN 释放锁定
+		-- LOCK_NB 设置文件锁非阻塞		
+	
+	*目录操作
+	resource opendir(path) 打开目录，返回句柄
+		目录不存在或无权限时返回false
+	
+	closedir(handle) 关闭目录
+	
+	is_dir(path) 判断path是否是目录
+	
+	array scandir(path [, sorting_order])
+		返回目录path下的文件和目录名，sorting_order指定排序，默认按首字母升序
+		
+	bool mkdir(path) 创建目录
+	
+	bool rmdir(path) 删除空目录
+	
+	string getcwd() 获取当前工作路径
+	
+	bool chdir(path) 切换到path目录
+	
+	float disk_free_space(path) 返回目录可用空间
+	
+	float disk_total_space(path) 返回目录总大小
+	
+	string readdir(handle) 返回下一个文件名，目录指针后移
+	
+	rewinddir(handle) 重置目录指针
+	
+	*文件上传
+	1、php.ini设置
+	-- file_uploads: on
+	-- upload_tmp_dir:文件上传过程咱存的目录
+	-- upload_max_filesize: 上传文件最大尺寸，默认为2M
+	...
+	
+	2、$_FILES 二位数组数组
+	在设置表单时，input域指定 name="u_file"
+	$_FILES["u_file"][...]存放了要上传的文件信息
+	-- name:文件名
+	-- size:大小(字节)
+	-- tmp_name:咱存在目录中的临时文件名
+	-- type:文件类型、
+	-- error:长传结果，为0表示上传成功
+	
+	3、move_uploaded_file(filename, dst_name)
+	文件上传函数，filename为临时文件名，dst_name为上传后文件的名字
+	-- 一般来说，令$filename = $_FILES["u_file"][tmp_name]
+				$dst_name = $_FILES["u_file"][name]
+	-- 多文件上传时，生命input的name="u_file[]" 为一个数组，这样，$_FILES["u_file"][name]保存了上传文件名的数组，$_FILES["u_file"][tmp_name]保存了临时文件名的数组，循环调用上传函数可以实现多文件的上传
 		
 	
 	
+
 	
 	
 	
-	
-	
-	
-	
+
 	
 	
 	
