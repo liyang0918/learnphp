@@ -619,6 +619,32 @@ PHP代码都是包含在 PHP标记中，如
 	
 	__autoload() 当用类实例化一个对象时，若该类不带当前php文件中，则需要include_once()导入这个类声明文件，若定义了__autoload()，则在实例化时调用它，函数内部可以实现对这个类文件的include_once.
 
+十、php操作mysql
+	php操作数据库的步骤
+		连接mysql数据库 -> 选择数据库 -> 执行sql语句 -> 关闭结果集 -> 关闭mysql
+	1、连接数据库
+	resource mysql_connect(host,username,password)
+		host是mysql所在主机
+		连接成功返回一个连接资源，失败返回false，用mysql_error()获取错误信息
+
+	2、选择数据库
+	resource mysql_select_db(dataname [, resource link])
+		link是mysql_connect()的返回值，若未制定，则尝试打开一个数据库并使用
+
+	3、执行sql语句
+	resource mysql_query(string SQL, link)
+		SQL是SQL语句，link是mysql_connect()的返回值
+	SQL的执行结果存放在资源resource中，可以使用一下3个函数的任意一个来获取结果：
+	-- array mysql_fetch_array(resource result [, result_type])
+		result是mysql_query()的返回值，该函数从执行结果中取出一行数据放入数组中，分别用数字、列名作为键，再次调用返回下一行；
+	-- object mysql_fetch_object(resource result)
+		函数从结果中取出一行数据，生成一个对象，对象成员是查询语句中的列名；
+	-- array mysql_fetch_row(resource result)
+		函数从结果中取出一行数据，放在数组中，数组使用数字作为键。
+	int mysql_num_rows(resource result)
+		返回结果的条目数
+
+
 
 
 
