@@ -518,14 +518,109 @@ PHP代码都是包含在 PHP标记中，如
 	文件上传函数，filename为临时文件名，dst_name为上传后文件的名字
 	-- 一般来说，令$filename = $_FILES["u_file"][tmp_name]
 				$dst_name = $_FILES["u_file"][name]
-	-- 多文件上传时，生命input的name="u_file[]" 为一个数组，这样，$_FILES["u_file"][name]保存了上传文件名的数组，$_FILES["u_file"][tmp_name]保存了临时文件名的数组，循环调用上传函数可以实现多文件的上传
-		
+	-- 多文件上传时，生命input的name="u_file[]" 为一个数组，这样，$_FILES["u_file"][name]保存了上传文件名的数组，$_FILES["u_file"][tmp_name]保存了临时文件名的数组，循环调用上传函数可以实现多文件的上传.
+
+
+九、面向对象
+	1、php定义一个类的格式为
+	class SportClass {...}
+	-- class是类定义的关键字，SportClass 是类名
+	-- 一个类只能在一个php代码片段中声明完成，即<?php ?>标记之间，不可分割成多块。	
 	
-	
+	2、类成员	
+	类的成员变量声明方式为 【关键字 变量名】
+
+	类的成员函数(方法)声明方式为 【关键字 function 方法名】
+		其中关键字有 public private protected static final
+		-- public 在声明时若没有制定关键字，则默认是public，任何人都可一方问该变量或方法
+		-- private 只能该类内部的变量或方法可以使用
+		-- protected 只能该类或它的子类内部方法可使用
+		-- static 静态成员不需要实例，使用类名就可以访问；
+			静态方法只能使用静态变量不能调用普通变量，普通方法可以调用静态变量；
+			静态成员调用格式为 【关键字::静态成员】,关键字可以是self或类名
+			静态成员在定义类的时候就一分配存储空间，销毁对象后仍存在。
+
+	类常量声明使用const关键字 【const PI=3.14159】
+
+	3、实例化
+	类的实例化通过new关键字来实现 $ob = new SportClass();
+
+	对象的成员调用 【对象名->成员名】
 
 	
+	4、类构造、析构
+	默认情况下，php会生成一个没有参数、不做任何动作的构造函数
+	类的构造函数
+		public function __construct(...)
+
+	类的析构
+		public function __destruct(void)
+
+	5、继承 多态
+	子类继承父类使用 extends 关键字
+		class subClass extends superClass {...}
+		-- subClass是子类名，superClass是父类名
+
+	多继承需要使用“接口类”(interface)来实现
+
+	多态的两种形式：覆盖和重载
+		覆盖是指子类重写父类中的同名函数
+		重载：php是弱类型语言，重载需要借助 __call() 魔术方法
+
+	6、this和 "::"
+	$this-> 在类内部使用，表示这个对象本身
+
+	:: 使用方法为 【关键字::变量名/常量名/方法】
+		关键字为 parent、self、类名
+		-- parent：可以调用父类中的成员
+		-- self ：调用本类中的静态成员和方法
+		-- 类名：调用指定类中的成员
+
+	7、特殊类
+	使用final定义不能被继承的类：【final class name {...}】
+
+	使用abstract定义抽象类：【abstract class name {...}】
+		抽象类是一种不能被实例化的类，只能作为其他类的父类，抽象类至少要包含一个抽象方法，也就时没有被实现的方法
+
+	使用interface声明接口类：【interface name】：注意没有class关键字
+		接口类只能包含为实现的方法和一些成员变量，使用接口类可以实现“多继承”：	
+		-- 使用 implements 实现多继承，如定义两个接口类 iclass1、iclass2
+		--	【class subclass implements iclass1, iclass2 {...}】
+
+	8、类比较、运算
+	php5中，使用赋值运算符仅仅是把该类引用赋给另一个变量，想获取该类的拷贝，需要使用clone关键字【$ob2 = clone $ob1】
+		在类中定义 __clone()方法，可以指定在clone时的行为，如修改某个成员变量；
 	
+	对象比较：
+	-- “==”比较的是两对象的值是否相等
+	-- “===”比较的是两变量是否指向同一个对象(是否是同一个对象的引用)
+
+	对象类型检测使用 instanceof 关键字
+		objectname instanceof classname ：对象objectname是否属于classname类或子类
+
+	9、魔术方法
+	__set($name, $value):当试图写入一个不存在或不可见(private、protected)的成员变量时，调用此方法，可以为类设置一个$name成员
+		if(!isset($this->$name)){$this->$name = $value;}
+
+	__get($name):当试图访问一个不存在或不可见的成员变量时，调用此方法
+		if(!isset($this->$name)){$this->$name = 0;}
+
+	__call($method, $varlist) 当试图调用不存在或不可见的成员方法时，调用__call()
+		$method是方法名，$varlist是一数组形式存放的参数表
+		在__call()中，通过判断函数名和参数表，调用不同的函数，实现 伪重载。
+
+	__sleep()和__wakeup():分别指定在对象的序列化和反序列化时所做的处理
+		serialize()将对象序列化，对象中变量全部保存，生成一个串，在unserialize()时再把串反序列化还原成对象
+		若定义了__sleep()，序列化前先调用 __sleep()，仅将它的返回值生成序列化的串
+		若定义了__wakeup()，在还原成对象后，调用该函数做后期处理
+
+	__toString() 当echo或print一个对象时，若为定义__toString()或产生致命错误，若定义_toString(),会打印它的返回值
+
 	
+	__autoload() 当用类实例化一个对象时，若该类不带当前php文件中，则需要include_once()导入这个类声明文件，若定义了__autoload()，则在实例化时调用它，函数内部可以实现对这个类文件的include_once.
+
+
+
 
 	
 	
