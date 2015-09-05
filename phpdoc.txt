@@ -752,7 +752,84 @@ PHP代码都是包含在 PHP标记中，如
 
 
 
+附录：
+一、5分钟JavaScript快速入门
+	//在网页中插入JavaScript
+	<script type="text/JavaScript">
+	//使用var 定义一个变量
+	var a;
+	// 使用 document.write()来输出内容
+	document.write("Hello world!");
+	</script>
 
+	<script language="javascript">
+	...
+	</script>
+
+	//在网页中引入外部js脚本
+	<script src="scripts.js"></script>
+
+	// js区分大小写
+
+	//js弹出框 alert() 警告框
+	<script type="text/JavaScript">
+	alert("Hello world");
+	</script>
+
+	//js弹出框 confirm() 确认框，返回true或false
+	<script type="text/JavaScript">
+	val r;
+	r = ("Is this?");
+	if(r == true) {
+	    ...
+	}else{
+	    ...
+	}
+	</script>
+	//js弹出框 prompt() 提问框，返回输入的字符串
+	<script type="text/JavaScript">
+	var ss;
+	ss = prompt("Who care?");
+	document.write(ss);
+	</script>
+
+	// js函数定义好之后，需要事件才能触发，html的button事件如下
+
+	<button value="submit" onclick="jsfun()">鼠标点击按钮事件</button>
+	<button value="submit" onmouseover="jsfun()">鼠标经过事件</button>
+	<button value="submit" onmouseout="jsfun()">鼠标离开事件</button>
+	。。。
+
+
+	/*
+	JavaScript是无类型语言
+	JS变量在使用前要先声明，var语句用来声明一个或多个变量
+	    var a;
+
+	JS运算符   === 等同 in instanceof
+
+	if(){}else{}
+
+	switch(){
+	    case 0:
+	    break;
+	    case 1:
+	    default:
+	}
+
+	while(){}
+
+	do{}while();
+
+	for(;;){}
+
+	array[0] = 0;
+	array[1] = 1;
+	for(value in array){}
+
+	function fun()
+	{}
+	*/
 
 	
 	
