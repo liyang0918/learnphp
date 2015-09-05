@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="gb2312"?>
+<object>
+    <book>
+        <computerbook>Hello Kitty</computerbook>
+        <computerbook>Hello Snake</computerbook>
+    </book>
+    <book>
+        <computerbook name="Hello Book">Hello World</computerbook>
+    </book>
+</object>

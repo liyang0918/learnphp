@@ -397,7 +397,7 @@ PHP代码都是包含在 PHP标记中，如
 	array file(name) 读取文件内容，并按行输出到数组内返回
 		文件不需打开
 		
-	string file_get_content(name [, offset, maxlen])
+	string file_get_contents(name [, offset, maxlen])
 		读取文件内容，存放在数组中返回，offset指定读取起始偏移，maxlen指定读取长度
 		
 	string fgets(handle [, length])
@@ -643,6 +643,112 @@ PHP代码都是包含在 PHP标记中，如
 		函数从结果中取出一行数据，放在数组中，数组使用数字作为键。
 	int mysql_num_rows(resource result)
 		返回结果的条目数
+
+十一、XML概述
+	1、XML文档的基本要素，XML声明、处理指令(PI)、注释和元素
+		XML声明
+		XML声明在文档中只能出现一次，而且必须是在第一行
+		<?xml version="1.0" encoding="gb2312" standalone="yes" ?>
+		-- version="1.0" XML的版本。是声明汇总必不可少的属性，而且必须放到第一位
+		-- encoding="gb2312" 编码声明。如果不声明，XML默认使用UTF-8来解析文档。
+		-- standalone="yes" 独立声明。如果该属性赋值yes，那么说明该XML不依赖于外部文档
+
+		处理指令
+		指定如何处理XML文档的指令 <?处理指令名 处理执行信息 ?>,如
+		<?xml-stylesheet type="text/css" href="Book.css"?>
+		-- xml-stylesheet: 样式表单处理指令
+		-- type="text/css": 设定了文档所使用的样式是css
+		-- href="Book.css": 设定了样式文件的地址
+
+		注释
+		<!-- ...... -->
+		-- 不能出现在XML声明之前
+		-- 不能出现在XML元素中间，如 <book <!-- 这是错误的 --> >
+		-- 不能出现在属性列表中
+		-- 不能花钱套注释
+		-- 注释内容可以包含 < > 和 &，但不允许有 "--" 字符
+
+		XML元素
+		<标签>数据内容</标签>
+		-- 标签必须成对出现，对于空余啊素，可以使用简短形式<标签/>
+		-- 英文标签只能用下划线或英文字母开头，中文标签只能用下划线或中文字符开头。名称中只能有 "_-.:"等特殊字符
+		-- 标签中不能有空格
+		-- 标签对大小写敏感
+
+		XML属性
+		XML属性时XML元素中的内容
+		<标签 属性名1="属性值1" 属性名2="属性值2" ...>内容</标签>
+		-- 属性名和属性值必须出现，不孕需属性名单独出现，如果有空的属性，使用 属性名="" 表示
+		-- 属性值必须用引号括起来
+
+		CDATA标记
+		XML中的 > 、<、& 等需要用实体引用来处理
+			字符				实体引用
+			<				&lt;
+			>				&gt;
+			'				&apos;
+			"				&quot;
+			&				&amp;
+
+		如果是在CDATA标记段内，这些字符不许要使用实体引用，CDATA标记格式如下
+		<![CDATA[
+		...
+		]]>
+
+		命名空间
+		命名空间通过元素前面增减一个前缀来保证元素和属性的唯一性
+		<标签名称 xmlns:前缀名称="URL">
+		设置好前缀名后，在写标签名时使用『前缀名:标签名』的形式
+
+	2、在PHP中创建XML文档
+	a、使用echo直接输出XML标签
+
+	b、SimpleXML
+		创建SimpleXML对象
+		-- simplexml_load_file("XML_filename");
+			返回SimpleXMLElement对象
+		-- simplerxml_load_string(string);
+			string是XML格式的字符串，返回SimpleXMLElement对象
+		-- simplexml_import_dom(domDocument dom)
+			dom时domDocument的一个实例，dom首先加载XML格式的字符串,dom->loadXML($str),返回SimpleXMLElement对象
+
+		遍历SimpleXMLElement对象所有元素
+		对于SimpleXMLElement对象，使用类方法child()获取其子节点
+
+		遍历所有属性SimpleXMLElement对象所有属性
+		对于SimpleXMLElement对象，使用类方法attributes()获取其属性
+	
+		访问特定节点及属性
+		每个标签下的子标签在php中表现为SimpleXMLElement对象的属性，若有多个同名标签，用数组表示，标签的属性也使用数组，直接用属性名访问
+		$xml->book[0]->computerbook[0]
+		$xml->book[1]->computerbook
+		$xml->book[1]->computerbook['name']
+
+		修改XML数据
+		直接访问改数据，使用 = 赋值
+		
+		保存XML文档
+		$modi = $xml->asXML();
+		-- $xml 是SimpleXMLElement对象，类方法asXML() 将$xml格式化为字符串，返回给$modi,然后将串写入文件即可保存。
+
+	c、动态创建XML文档 DOM
+		$dom = new DOMDocument(version,encoding);
+		-- 创建DOM对象
+		$object = $dom->createElement('object')
+		-- 创建名为 object 的标签
+		$dom->appendChild($object)
+		-- 将标签 $object 加入到dom下
+		-- 若又有标签$book,需要在object下，需要调用$object的方法appendChild($book)
+		$type = $dom->createAttribute('type')
+		-- 创建一个名为type的属性
+		-- 若将属性加入某个标签，使用这个标签对象的 appendChild() 方法
+		$type_value = $dom->createTextNode('computer')
+		-- 创建一个文本类型的值，这个值可以作为属性值、标签内容等等
+		-- 若将这个值加入某属性或标签，使用该对象的 appendChild() 方法	
+
+
+
+
 
 
 
